@@ -1,38 +1,17 @@
-<div
-  class="tab-pane fade show active"
-  id="show-feature"
-  role="tabpanel"
-  aria-labelledby="home-tab"
->
+<div class="tab-pane fade show active" id="show-feature" role="tabpanel" aria-labelledby="home-tab">
   <!-- DataTables Example -->
   <div class="card shadow mb-4 mt-2">
     <div class="card-body">
       <div class="row">
         <div class="col-md-5">
-          <form
-            action="/admin/item/add/feature"
-            method="POST"
-            enctype="multipart/form-data"
-          >
+          <form action="/admin/item/add/feature" method="POST" enctype="multipart/form-data">
             <div class="form-group">
               <label for="name">Name</label>
-              <input
-                type="text"
-                class="form-control"
-                name="name"
-                placeholder="Enter Name"
-                required
-              />
+              <input type="text" class="form-control" name="name" placeholder="Enter Name" required />
             </div>
             <div class="form-group">
               <label for="name">QTY</label>
-              <input
-                type="number"
-                class="form-control"
-                name="qty"
-                placeholder="Enter qty"
-                required
-              />
+              <input type="number" class="form-control" name="qty" placeholder="Enter qty" required />
             </div>
             <div class="form-group">
               <label for="name">Image</label>
@@ -44,12 +23,7 @@
         </div>
         <div class="col-md-7">
           <div class="table-responsive">
-            <table
-              class="table table-bordered"
-              id="dataTable"
-              width="100%"
-              cellspacing="0"
-            >
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
               <thead>
                 <tr>
                   <th>No</th>
@@ -66,30 +40,16 @@
                   <td><%= feature[i].name %></td>
                   <td><%= feature[i].qty %></td>
                   <td>
-                    <img
-                      src="http://localhost:3000/<%= feature[i].imageUrl %>"
-                      alt="imageUrl"
-                      width="70px"
-                    />
+                    <img src="https://admin-staycationnn.herokuapp.com/<%= feature[i].imageUrl %>" alt="imageUrl"
+                      width="70px" />
                   </td>
                   <td>
-                    <form
-                      action="/admin/item/<%= itemId %>/feature/<%= feature[i].id %>?_method=DELETE"
-                      method="POST"
-                    >
-                      <a
-                        href="javascript:void();"
-                        type="button"
-                        class="btn btn-warning btn-circle btn-sm button-update"
-                        data-id="<%= feature[i].id %>"
-                        data-name="<%= feature[i].name %>"
-                        data-qty="<%= feature[i].qty %>"
-                        ><i class="fas fa-edit"></i>
+                    <form action="/admin/item/<%= itemId %>/feature/<%= feature[i].id %>?_method=DELETE" method="POST">
+                      <a href="javascript:void();" type="button" class="btn btn-warning btn-circle btn-sm button-update"
+                        data-id="<%= feature[i].id %>" data-name="<%= feature[i].name %>"
+                        data-qty="<%= feature[i].qty %>"><i class="fas fa-edit"></i>
                       </a>
-                      <button
-                        type="submit"
-                        class="btn btn-danger btn-circle btn-sm"
-                      >
+                      <button type="submit" class="btn btn-danger btn-circle btn-sm">
                         <i class="fas fa-trash"></i>
                       </button>
                     </form>
