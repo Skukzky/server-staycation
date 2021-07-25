@@ -6,22 +6,27 @@ var logger = require("morgan");
 const methodOverride = require("method-override");
 const session = require("express-session");
 const flash = require("connect-flash");
+var app = express();
 // import mongoose
 const mongoose = require("mongoose");
-mongoose.connect("mongodb+srv://rifkioskar:bwamern@cluster0.wuxjy.mongodb.net/db_staycation?retryWrites=true&w=majority", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useCreateIndex: true,
-  useFindAndModify: false,
-});
+mongoose.connect(
+  "mongodb+srv://rifkioskar:bwamern@cluster0.wuxjy.mongodb.net/db_staycation?retryWrites=true&w=majority",
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
+  }
+);
+
+const cors = require("cors");
+app.use(cors());
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 // router admin
 const adminRouter = require("./routes/admin");
 const apiRouter = require("./routes/api");
-
-var app = express();
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -34,16 +39,18 @@ app.use(
     resave: false,
     saveUninitialized: true,
     cookie: {
-      maxAge: 60000
+      maxAge: 60000,
     },
   })
 );
 app.use(flash());
 app.use(logger("dev"));
 app.use(express.json());
-app.use(express.urlencoded({
-  extended: false
-}));
+app.use(
+  express.urlencoded({
+    extended: false,
+  })
+);
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(
@@ -58,7 +65,7 @@ app.use("/admin", adminRouter);
 app.use("/api/v1/member", apiRouter);
 
 // catch 404 and forward to error handler
-app.use(function (req, res, next) {
+app.use(function (req, res, next, cors) {
   next(createError(404));
 });
 
