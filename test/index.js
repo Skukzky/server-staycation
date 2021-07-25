@@ -17,7 +17,7 @@ describe("API ENDPOINT TESTING", () => {
         expect(res.body).to.be.an("object");
         expect(res.body).to.have.property("hero");
         expect(res.body.hero).to.have.all.keys(
-          "travelers",
+          "traveler",
           "treasures",
           "cities"
         );

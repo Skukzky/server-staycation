@@ -1,7 +1,6 @@
 const Item = require("../models/Item");
-// node-modules->mongoose->lib->index.js 543...
 const Treasure = require("../models/Activity");
-const Traveler = require("../models/Booking");
+const Treveler = require("../models/Booking");
 const Category = require("../models/Category");
 const Bank = require("../models/Bank");
 const Booking = require("../models/Booking");
@@ -20,7 +19,7 @@ module.exports = {
         .limit(3)
         .populate({
           path: "itemId",
-          select: "_id title country city isPopular imageId",
+          select: "_id title country city isPopular  imageId",
           perDocumentLimit: 4,
           option: { sort: { sumBooking: -1 } },
           populate: {
@@ -30,7 +29,7 @@ module.exports = {
           },
         });
 
-      const travelers = await Traveler.find();
+      const treveler = await Treveler.find();
       const treasure = await Treasure.find();
       const city = await Item.find();
 
@@ -59,7 +58,7 @@ module.exports = {
 
       res.status(200).json({
         hero: {
-          travelers: travelers.length,
+          travelers: treveler.length,
           treasures: treasure.length,
           cities: city.length,
         },
@@ -69,7 +68,7 @@ module.exports = {
       });
     } catch (error) {
       console.log(error);
-      res.status(500).json({ message: "internal server error" });
+      res.status(500).json({ message: "Internal server error" });
     }
   },
 
@@ -77,18 +76,9 @@ module.exports = {
     try {
       const { id } = req.params;
       const item = await Item.findOne({ _id: id })
-        .populate({
-          path: "featureId",
-          select: "_id name qty imageUrl",
-        })
-        .populate({
-          path: "activityId",
-          select: "_id name type imageUrl",
-        })
-        .populate({
-          path: "imageId",
-          select: "_id imageUrl",
-        });
+        .populate({ path: "featureId", select: "_id name qty imageUrl" })
+        .populate({ path: "activityId", select: "_id name type imageUrl" })
+        .populate({ path: "imageId", select: "_id imageUrl" });
 
       const bank = await Bank.find();
 
@@ -109,8 +99,7 @@ module.exports = {
         testimonial,
       });
     } catch (error) {
-      console.log(error);
-      res.status(500).json({ message: "internal server error" });
+      res.status(500).json({ message: "Internal server error" });
     }
   },
 
@@ -128,9 +117,12 @@ module.exports = {
       accountHolder,
       bankFrom,
     } = req.body;
+
     if (!req.file) {
-      return res.status(404).json({ messages: "image not found" });
+      return res.status(404).json({ message: "Image not found" });
     }
+
+    console.log(idItem);
 
     if (
       idItem === undefined ||
@@ -145,11 +137,13 @@ module.exports = {
       accountHolder === undefined ||
       bankFrom === undefined
     ) {
-      res.status(404).json({ messages: "Lengkapi semua field" });
+      res.status(404).json({ message: "Lengkapi semua field" });
     }
+
     const item = await Item.findOne({ _id: idItem });
+
     if (!item) {
-      return res.status(404).json({ messages: "Item not found" });
+      return res.status(404).json({ message: "Item not found" });
     }
 
     item.sumBooking += 1;
@@ -190,6 +184,6 @@ module.exports = {
 
     const booking = await Booking.create(newBooking);
 
-    res.status(201).json({ messages: "Sukses Booking", booking });
+    res.status(201).json({ message: "Success Booking", booking });
   },
 };
