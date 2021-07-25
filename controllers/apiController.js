@@ -30,7 +30,7 @@ module.exports = {
           },
         });
 
-      const traveler = await Traveler.find();
+      const travelers = await Traveler.find();
       const treasure = await Treasure.find();
       const city = await Item.find();
 
@@ -59,7 +59,7 @@ module.exports = {
 
       res.status(200).json({
         hero: {
-          traveler: traveler.length,
+          travelers: travelers.length,
           treasures: treasure.length,
           cities: city.length,
         },
