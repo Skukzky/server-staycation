@@ -706,14 +706,9 @@ module.exports = {
     try {
       const alertMessage = req.flash("alertMessage");
       const alertStatus = req.flash("alertStatus");
-      const alert = {
-        message: alertMessage,
-        status: alertStatus,
-      };
+      const alert = { message: alertMessage, status: alertStatus };
 
-      const booking = await Booking.findOne({
-        _id: id,
-      })
+      const booking = await Booking.findOne({ _id: id })
         .populate("memberId")
         .populate("bankId");
 
@@ -731,9 +726,7 @@ module.exports = {
   actionConfirmation: async (req, res) => {
     const { id } = req.params;
     try {
-      const booking = await Booking.findOne({
-        _id: id,
-      });
+      const booking = await Booking.findOne({ _id: id });
       booking.payments.status = "Accept";
       await booking.save();
       req.flash("alertMessage", "Success Confirmation Pembayaran");
@@ -747,9 +740,7 @@ module.exports = {
   actionReject: async (req, res) => {
     const { id } = req.params;
     try {
-      const booking = await Booking.findOne({
-        _id: id,
-      });
+      const booking = await Booking.findOne({ _id: id });
       booking.payments.status = "Reject";
       await booking.save();
       req.flash("alertMessage", "Success Reject Pembayaran");
